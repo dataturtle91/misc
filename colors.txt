@@ -1,0 +1,65 @@
+Lista stonowanych kolorów by ChatGPT:
+=======================================
+
+
+---------------------------
+Beżowe i brązowe odcienie:
+---------------------------
+
+beige
+wheat
+navajowhite
+burlywood
+tan
+rosybrown
+
+----------------------------
+Niebieskie i szare odcienie:
+----------------------------
+
+lightsteelblue
+powderblue
+slategray
+cadetblue
+lightskyblue
+lightblue
+
+-----------------
+Zielone odcienie:
+-----------------
+
+darkseagreen
+lightseagreen
+mediumaquamarine
+palegreen
+honeydew
+sage
+
+---------------------------
+Czerwone i różowe odcienie:
+---------------------------
+
+mistyrose
+lightcoral
+palevioletred
+indianred
+rosybrown
+
+--------------------------------
+Fioletowe i lawendowe odcienie:
+--------------------------------
+
+thistle
+lavender
+plum
+palevioletred
+slateblue
+
+-------------------------------
+Żółte i pomarańczowe odcienie:
+-------------------------------
+khaki
+palegoldenrod
+moccasin
+peachpuff
+cornsilk
