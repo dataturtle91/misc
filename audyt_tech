@@ -1,0 +1,50 @@
+(function() {
+    // Funkcja formatowania daty i godziny
+    function getFormattedDate() {
+        const now = new Date();
+        const date = now.toISOString().slice(0, 10);  // YYYY-MM-DD
+        const time = now.toTimeString().slice(0, 8);  // HH:MM:SS
+        return `${date} ${time}`;
+    }
+
+    // Pobieranie nazwy domeny
+    const domain = window.location.hostname;
+
+    // Zbieranie wskaźników wydajności
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const perfEntries = performance.getEntriesByType('navigation')[0];
+            const perfPaint = performance.getEntriesByType('paint');
+            const perfLCP = performance.getEntriesByType('largest-contentful-paint');
+            const perfCLS = performance.getEntriesByType('layout-shift');
+
+            // Kluczowe wskaźniki
+            const TTFB = perfEntries.responseStart - perfEntries.requestStart;
+            const FCP = perfPaint.find(entry => entry.name === 'first-contentful-paint')?.startTime || 'N/A';
+            const LCP = perfLCP.length ? perfLCP[perfLCP.length - 1].startTime : 'N/A';
+            const CLS = perfCLS.reduce((sum, shift) => sum + (shift.hadRecentInput ? 0 : shift.value), 0);
+            const TTI = perfEntries.domInteractive;
+
+            // Dodatkowe wskaźniki
+            const TotalLoadTime = perfEntries.loadEventEnd - perfEntries.startTime;  // Całkowity czas ładowania strony
+            const DOMLoadTime = perfEntries.domContentLoadedEventEnd - perfEntries.startTime;  // Czas załadowania DOM
+            const DOMElementsCount = document.getElementsByTagName('*').length;  // Ilość elementów DOM
+
+            // Wyświetlanie raportu w konsoli
+            console.log(`\n===== Performance Report =====`);
+            console.log(`Domena: ${domain}`);
+            console.log(`Data i godzina testu: ${getFormattedDate()}`);
+            console.log(`------------------------------`);
+            console.log(`Time to First Byte (TTFB): ${TTFB.toFixed(2)} ms`);
+            console.log(`First Contentful Paint (FCP): ${FCP.toFixed(2)} ms`);
+            console.log(`Largest Contentful Paint (LCP): ${LCP.toFixed(2)} ms`);
+            console.log(`Time to Interactive (TTI): ${TTI.toFixed(2)} ms`);
+            console.log(`Cumulative Layout Shift (CLS): ${CLS.toFixed(4)}`);
+            console.log(`------------------------------`);
+            console.log(`Total Load Time: ${TotalLoadTime.toFixed(2)} ms`);
+            console.log(`DOM Load Time: ${DOMLoadTime.toFixed(2)} ms`);
+            console.log(`DOM Elements Count: ${DOMElementsCount}`);
+            console.log(`==============================\n`);
+        }, 3000);  // Opóźnienie, aby zebrać wszystkie dane po załadowaniu strony
+    });
+})();
