@@ -1,0 +1,229 @@
+Kody błędów HTTP – opis i sposoby rozwiązania
+
+Protokół HTTP zwraca kody odpowiedzi informujące o statusie żądania klienta (np. przeglądarki) do serwera. Błędy HTTP dzielą się na 4xx (błędy klienta) oraz 5xx (błędy serwera). Poniżej przedstawiono najczęstsze oraz mniej popularne błędy wraz z ich możliwymi przyczynami i metodami rozwiązania.
+
+
+---
+
+1. Błędy 4xx – błędy klienta
+
+400 Bad Request (Nieprawidłowe żądanie)
+
+Serwer nie może przetworzyć żądania z powodu błędnej składni lub niepoprawnych danych.
+Rozwiązanie:
+
+Sprawdzenie poprawności nagłówków i treści żądania.
+
+Upewnienie się, że dane są poprawnie sformułowane (np. JSON, XML).
+
+
+401 Unauthorized (Brak autoryzacji)
+
+Dostęp do zasobu wymaga uwierzytelnienia, ale brak poprawnych poświadczeń.
+Rozwiązanie:
+
+Podanie poprawnych danych logowania.
+
+Sprawdzenie, czy tokeny uwierzytelniające są aktualne.
+
+
+402 Payment Required (Wymagana płatność)
+
+Kod rezerwowy dla usług wymagających płatności (rzadko stosowany).
+Rozwiązanie:
+
+Weryfikacja, czy płatność została dokonana.
+
+Sprawdzenie limitów w usłudze.
+
+
+403 Forbidden (Brak dostępu)
+
+Serwer rozumie żądanie, ale odmawia jego realizacji.
+Rozwiązanie:
+
+Sprawdzenie uprawnień użytkownika.
+
+Upewnienie się, że dostęp do zasobu nie jest zablokowany na poziomie serwera.
+
+
+404 Not Found (Nie znaleziono)
+
+Żądany zasób nie istnieje lub został usunięty.
+Rozwiązanie:
+
+Sprawdzenie poprawności adresu URL.
+
+Upewnienie się, że zasób istnieje na serwerze.
+
+
+405 Method Not Allowed (Metoda niedozwolona)
+
+Serwer nie obsługuje użytej metody HTTP (np. POST zamiast GET).
+Rozwiązanie:
+
+Sprawdzenie obsługiwanych metod dla danego zasobu.
+
+Zmiana metody żądania.
+
+
+406 Not Acceptable (Nieakceptowalne)
+
+Serwer nie może zwrócić odpowiedzi w wymaganym formacie (Accept w nagłówku).
+Rozwiązanie:
+
+Upewnienie się, że serwer obsługuje wymagany format danych.
+
+Zmiana nagłówka Accept w żądaniu.
+
+
+407 Proxy Authentication Required (Wymagana autoryzacja proxy)
+
+Dostęp wymaga uwierzytelnienia przez serwer proxy.
+Rozwiązanie:
+
+Podanie poświadczeń proxy.
+
+Sprawdzenie konfiguracji serwera proxy.
+
+
+408 Request Timeout (Przekroczony czas żądania)
+
+Serwer nie otrzymał pełnego żądania w określonym czasie.
+Rozwiązanie:
+
+Sprawdzenie połączenia sieciowego.
+
+Ponowne wysłanie żądania.
+
+
+409 Conflict (Konflikt)
+
+Żądanie powoduje konflikt w stanie zasobu (np. równoczesna edycja).
+Rozwiązanie:
+
+Rozwiązanie konfliktu w aplikacji.
+
+Ponowne wysłanie żądania po aktualizacji zasobu.
+
+
+410 Gone (Zasób usunięty)
+
+Żądany zasób został trwale usunięty.
+Rozwiązanie:
+
+Sprawdzenie, czy zasób jest dostępny pod innym adresem.
+
+Skorzystanie z alternatywnych metod dostępu.
+
+
+411 Length Required (Wymagana długość)
+
+Brak nagłówka Content-Length, a serwer wymaga jego obecności.
+Rozwiązanie:
+
+Dodanie Content-Length do nagłówków żądania.
+
+
+429 Too Many Requests (Zbyt wiele żądań)
+
+Serwer blokuje żądania z powodu przekroczenia limitu.
+Rozwiązanie:
+
+Oczekiwanie na reset limitu (Retry-After).
+
+Optymalizacja liczby wysyłanych żądań.
+
+
+
+---
+
+2. Błędy 5xx – błędy serwera
+
+500 Internal Server Error (Błąd wewnętrzny serwera)
+
+Serwer napotkał nieoczekiwany problem.
+Rozwiązanie:
+
+Sprawdzenie logów serwera.
+
+Weryfikacja poprawności skryptów i konfiguracji aplikacji.
+
+
+501 Not Implemented (Niezaimplementowane)
+
+Serwer nie obsługuje żądanej metody HTTP.
+Rozwiązanie:
+
+Sprawdzenie dokumentacji API.
+
+Użycie obsługiwanej metody HTTP.
+
+
+502 Bad Gateway (Błędna brama)
+
+Serwer pośredniczący otrzymał nieprawidłową odpowiedź od serwera docelowego.
+Rozwiązanie:
+
+Sprawdzenie dostępności serwera docelowego.
+
+Weryfikacja konfiguracji proxy i balancera obciążenia.
+
+
+503 Service Unavailable (Usługa niedostępna)
+
+Serwer jest przeciążony lub w trybie konserwacji.
+Rozwiązanie:
+
+Sprawdzenie obciążenia serwera.
+
+Skalowanie zasobów lub ograniczenie ruchu.
+
+
+504 Gateway Timeout (Przekroczony czas oczekiwania na bramę)
+
+Serwer proxy nie otrzymał odpowiedzi od serwera docelowego w określonym czasie.
+Rozwiązanie:
+
+Optymalizacja czasu odpowiedzi serwera.
+
+Zwiększenie wartości timeout w konfiguracji proxy.
+
+
+505 HTTP Version Not Supported (Nieobsługiwana wersja HTTP)
+
+Serwer nie obsługuje wersji protokołu HTTP użytej w żądaniu.
+Rozwiązanie:
+
+Użycie obsługiwanej wersji HTTP.
+
+Sprawdzenie dokumentacji serwera.
+
+
+507 Insufficient Storage (Niewystarczająca ilość miejsca)
+
+Serwer nie może przetworzyć żądania z powodu braku miejsca na zapis.
+Rozwiązanie:
+
+Zwolnienie przestrzeni dyskowej.
+
+Przeniesienie danych do innego zasobu.
+
+
+511 Network Authentication Required (Wymagane uwierzytelnienie sieciowe)
+
+Dostęp wymaga zalogowania się do sieci (np. hotspot Wi-Fi).
+Rozwiązanie:
+
+Zalogowanie się do sieci.
+
+Sprawdzenie wymagań dostawcy usług.
+
+
+
+---
+
+Podsumowanie
+
+Błędy HTTP mogą wynikać zarówno z problemów po stronie klienta (4xx), jak i serwera (5xx). Kluczowe jest analizowanie kodów błędów, sprawdzanie logów serwera i odpowiednie dostosowywanie konfiguracji aplikacji oraz żądań.
+
