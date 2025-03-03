@@ -1,0 +1,67 @@
+Rekord SPF (Sender Policy Framework) – wpis w systemie DNS określający listę serwerów uprawnionych do wysyłania wiadomości e-mail w imieniu danej domeny. Służy do ochrony przed fałszowaniem adresu nadawcy (spoofingiem).
+
+Elementy rekordu SPF
+
+1. v=spf1 – oznaczenie wersji SPF (obecnie zawsze spf1).
+
+
+2. ip4:<adres> / ip6:<adres> – wskazuje adresy IP lub zakresy adresów IPv4 i IPv6 uprawnione do wysyłania wiadomości.
+
+ip4:192.0.2.0/24 – pozwala na wysyłanie e-maili z adresów w zakresie 192.0.2.0–192.0.2.255.
+
+ip6:2001:db8::/32 – pozwala na wysyłanie e-maili z zakresu adresów IPv6 2001:db8::/32.
+
+
+
+3. include:<domena> – zezwala na stosowanie reguł SPF innej domeny.
+
+include:_spf.google.com – pozwala serwerom wskazanym w SPF domeny google.com na wysyłanie wiadomości w imieniu danej domeny.
+
+
+
+4. a – uprawnia serwery posiadające rekord A w DNS danej domeny do wysyłania wiadomości.
+
+a – odnosi się do głównej domeny.
+
+a:sub.domena.com – odnosi się do konkretnej subdomeny.
+
+
+
+5. mx – zezwala na wysyłanie e-maili z serwerów określonych w rekordach MX danej domeny.
+
+mx – pozwala wszystkim serwerom pocztowym domeny na wysyłanie e-maili.
+
+
+
+6. ptr – odnosi się do odwrotnych rekordów DNS (PTR), jednak jego stosowanie jest uznawane za niezalecane i przestarzałe.
+
+
+7. exists:<domena> – zezwala na wysyłanie e-maili, jeśli wskazana domena istnieje w systemie DNS.
+
+
+8. all – określa domyślne zachowanie dla serwerów niewymienionych w rekordzie SPF.
+
+-all – (hard fail) odrzuca wiadomości pochodzące spoza listy dozwolonych źródeł.
+
+~all – (soft fail) oznacza wiadomości jako podejrzane, ale ich nie odrzuca.
+
+?all – nie określa polityki dla niezdefiniowanych serwerów.
+
++all – zezwala wszystkim serwerom na wysyłanie wiadomości (uznawane za błąd konfiguracji).
+
+
+
+
+Przykładowy rekord SPF
+
+v=spf1 ip4:203.0.113.5 include:_spf.google.com -all
+
+Interpretacja:
+
+Adres IP 203.0.113.5 ma uprawnienia do wysyłania wiadomości.
+
+Serwery zdefiniowane w SPF domeny google.com są autoryzowane.
+
+Wysyłanie e-maili z innych serwerów jest niedozwolone.
+
+
