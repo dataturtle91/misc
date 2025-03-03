@@ -1,0 +1,48 @@
+Google Analytics 4 (GA4) można połączyć z Google Ads bez użycia Google Tag Managera (GTM). Integracja odbywa się bezpośrednio w panelu GA4 i nie wymaga dodatkowych narzędzi.
+
+Jak połączyć GA4 z Google Ads?
+
+1. Zaloguj się do Google Analytics:
+
+Przejdź do konta GA4.
+
+
+
+2. Wejdź w ustawienia integracji:
+
+Kliknij Administracja (Admin).
+
+W sekcji Usługa (Property) wybierz Połączenia z Google Ads (Google Ads Links).
+
+
+
+3. Dodaj połączenie:
+
+Kliknij Połącz (Link).
+
+Wybierz konto Google Ads, które chcesz powiązać.
+
+Postępuj zgodnie z instrukcjami i kliknij Potwierdź.
+
+
+
+4. Zakończ konfigurację:
+
+Upewnij się, że opcja Włącz personalizację reklam jest aktywna (jeśli chcesz korzystać z remarketingu).
+
+Kliknij Zapisz.
+
+
+
+
+Co daje integracja GA4 z Google Ads?
+
+Importowanie konwersji: Możesz mierzyć skuteczność kampanii na podstawie danych z GA4.
+
+Tworzenie odbiorców do remarketingu: GA4 może przesyłać segmenty użytkowników do Google Ads.
+
+Lepsza analiza danych: Możesz analizować zachowania użytkowników, którzy kliknęli reklamy.
+
+
+Nie trzeba używać GTM do tej integracji, ale jeśli chcesz mieć większą kontrolę nad tagami śledzenia, GTM może się przydać do konfiguracji zaawansowanych zdarzeń w GA4.
+
