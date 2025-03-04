@@ -1,4 +1,4 @@
-Kody błędów HTTP – opis i sposoby rozwiązania
+Kody błędów HTTP – opis i sposoby rozwiązania - ChatGPT
 
 Protokół HTTP zwraca kody odpowiedzi informujące o statusie żądania klienta (np. przeglądarki) do serwera. Błędy HTTP dzielą się na 4xx (błędy klienta) oraz 5xx (błędy serwera). Poniżej przedstawiono najczęstsze oraz mniej popularne błędy wraz z ich możliwymi przyczynami i metodami rozwiązania.
 
