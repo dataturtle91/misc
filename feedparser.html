@@ -25,14 +25,16 @@
         const xmlDoc = parser.parseFromString(e.target.result, "application/xml");
         const entries = xmlDoc.getElementsByTagName("entry");
 
-        let csv = "ID,product_name,link\n";
+        // product_code (MPN) jako pierwsza kolumna
+        let csv = "product_code,ID,product_name,link\n";
 
         for (let entry of entries) {
+          const mpn = entry.getElementsByTagName("g:mpn")[0]?.textContent || "";
           const id = entry.getElementsByTagName("g:id")[0]?.textContent || "";
           const title = entry.getElementsByTagName("title")[0]?.textContent || "";
           const link = entry.getElementsByTagName("link")[0]?.textContent || "";
 
-          csv += `"${id}","${title}","${link}"\n`;
+          csv += `"${mpn}","${id}","${title}","${link}"\n`;
         }
 
         downloadCSV(csv);
