@@ -26,7 +26,7 @@
         const entries = xmlDoc.getElementsByTagName("entry");
 
         // Separator: średnik
-        let csv = "product_code;ID;product_name;link\n";
+        let csv = "product_code;id;product_name;url\n";
 
         for (let entry of entries) {
           const mpn = entry.getElementsByTagName("g:mpn")[0]?.textContent || "";
@@ -39,7 +39,7 @@
         }
 
         downloadCSV(csv);
-        document.getElementById("status").textContent = "CSV gotowy do pobrania z separatorem średnikowym.";
+        document.getElementById("status").textContent = "CSV gotowy do pobrania.";
       };
       reader.readAsText(file);
     }
