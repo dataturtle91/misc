@@ -25,8 +25,8 @@
         const xmlDoc = parser.parseFromString(e.target.result, "application/xml");
         const entries = xmlDoc.getElementsByTagName("entry");
 
-        // product_code (MPN) jako pierwsza kolumna
-        let csv = "product_code,id,product_name,link\n";
+        // Separator: średnik
+        let csv = "product_code;ID;product_name;link\n";
 
         for (let entry of entries) {
           const mpn = entry.getElementsByTagName("g:mpn")[0]?.textContent || "";
@@ -34,11 +34,12 @@
           const title = entry.getElementsByTagName("title")[0]?.textContent || "";
           const link = entry.getElementsByTagName("link")[0]?.textContent || "";
 
-          csv += `"${mpn}","${id}","${title}","${link}"\n`;
+          // Pojedyncze cudzysłowy nadal chronią dane, jeśli zawierają średnik
+          csv += `"${mpn}";"${id}";"${title}";"${link}"\n`;
         }
 
         downloadCSV(csv);
-        document.getElementById("status").textContent = "CSV gotowy do pobrania.";
+        document.getElementById("status").textContent = "CSV gotowy do pobrania z separatorem średnikowym.";
       };
       reader.readAsText(file);
     }
