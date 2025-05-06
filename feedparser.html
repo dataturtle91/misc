@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Parser feedu XML do CSV</title>
+</head>
+<body>
+  <h2>Wczytaj feed XML</h2>
+  <input type="file" id="fileInput" accept=".xml">
+  <button onclick="parseXML()">Przetwórz</button>
+  <p id="status"></p>
+
+  <script>
+    function parseXML() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (!file) {
+        alert('Wybierz plik XML.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(e.target.result, "application/xml");
+        const entries = xmlDoc.getElementsByTagName("entry");
+
+        let csv = "ID,product_name,link\n";
+
+        for (let entry of entries) {
+          const id = entry.getElementsByTagName("g:id")[0]?.textContent || "";
+          const title = entry.getElementsByTagName("title")[0]?.textContent || "";
+          const link = entry.getElementsByTagName("link")[0]?.textContent || "";
+
+          csv += `"${id}","${title}","${link}"\n`;
+        }
+
+        downloadCSV(csv);
+        document.getElementById("status").textContent = "CSV gotowy do pobrania.";
+      };
+      reader.readAsText(file);
+    }
+
+    function downloadCSV(data) {
+      const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'produkty.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
