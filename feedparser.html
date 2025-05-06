@@ -26,7 +26,7 @@
         const entries = xmlDoc.getElementsByTagName("entry");
 
         // product_code (MPN) jako pierwsza kolumna
-        let csv = "product_code,ID,product_name,link\n";
+        let csv = "product_code,id,product_name,link\n";
 
         for (let entry of entries) {
           const mpn = entry.getElementsByTagName("g:mpn")[0]?.textContent || "";
