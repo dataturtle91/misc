@@ -1,0 +1,79 @@
+---
+title: "Windows Console"
+author: "Bartosz Jaźwa"
+date: "2025-08-25"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## Opis projektu
+
+Dokument przedstawia, w jaki sposób przy użyciu języka R można
+przetwarzać wynik polecenia "netstat -an" do ramki danych (tabeli)
+
+## Część główna
+
+Założmy, że chcemy pobrać do obiektu R zawartość polecenia **netstat**.
+Parametr intern = TRUE sprawi, że wynik trafi do obiektu w R, a nie do
+konsoli.
+
+```{r}
+net_out <- system("netstat -an", intern = TRUE)
+```
+
+Znajdujemy indeks linii z nagłówkiem (dla 'nestat -an' zaczyna się od
+proto) Dodajemy [1] aby mieć pewność, że wybieramy pierwszy element
+wektora.
+
+Oddzielamy nagłówek od danych:
+
+```{r}
+header_idx <- grep("Proto", net_out)[1]
+rows <- net_out[(header_idx+1):length(net_out)]
+```
+
+Nadajemy nagłówkowi poprawną formę:
+
+```{r}
+header <- c("Proto", "Local Adress", "Foreign Adress", "State")
+```
+
+Dzielmy wiersze po pustych znakach. Wybieramy tylko te, które nie są
+puste:
+
+```{r}
+split_rows <- strsplit(rows, "\\s+")
+split_rows <- lapply(split_rows, function(x) x[x != ""])
+```
+
+Wywołujemy na wszystkich elementach (do.call) listy **split_rows**
+funkcję, która wymusza, aby każdy wektor x miał dokładnie tę samą
+długość co nagłówki. Jeżeli x jest krótszy, zostanie uzupełniony o NA.
+Jeżeli jest dłuższy - zostanie ucięty.
+
+```{r}
+net_df <- do.call(rbind, 
+                  lapply(split_rows, 
+                        function(x) { 
+                        length(x) <- length(header) # dopasowanie długości x 
+                        x
+                        }))
+
+```
+
+Tworzymy ramkę danych:
+
+```{r}
+net_df <- as.data.frame(net_df, stringsAsFactors = FALSE)
+colnames(net_df) <- header
+```
+
+## Efekt końcowy
+
+Wyświetlamy efekt końcowy:
+
+```{r}
+head(net_df,n = 10)
+```
