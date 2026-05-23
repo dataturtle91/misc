@@ -1,0 +1,109 @@
+1. Architektura i komponenty
+
+NPrinting Server
+Centralny komponent odpowiedzialny za harmonogramy, generowanie raportów i dystrybucję. Zarządza zadaniami (tasks), kolejką i integracją z Qlik Sense/QlikView.
+Przykład: Server uruchamia o 6:00 zadanie generujące raport sprzedażowy i wysyła go mailem do działu finansów.
+
+NPrinting Engine
+Silnik wykonawczy odpowiedzialny za faktyczne renderowanie raportów. Przetwarza dane z Qlika i generuje pliki (np. Excel, PDF).
+Przykład: Engine przetwarza szablon Excel i wstawia do niego dane sprzedaży z aplikacji Qlik Sense.
+
+NPrinting Web Console
+Interfejs webowy do konfiguracji systemu: tworzenia raportów, zadań, użytkowników i filtrów. To główne narzędzie administracyjne.
+Przykład: Tworzysz nowe zadanie (task) i przypisujesz do niego raport oraz harmonogram.
+
+NPrinting Designer
+Dodatek do Excela/Worda/PowerPointa umożliwiający budowę szablonów raportów. Pozwala wstawiać obiekty Qlika bezpośrednio do dokumentu.
+Przykład: W Excelu tworzysz raport z tabelą sprzedaży i wykresem pobranym z Qlik Sense.
+
+2. Źródła danych i integracja
+
+Connection
+Połączenie między NPrinting a aplikacją Qlik Sense lub QlikView. Określa, skąd pobierane są dane do raportów.
+Przykład: Tworzysz connection do aplikacji „Sales.qvf” na serwerze Qlik Sense.
+
+App (NPrinting)
+Reprezentacja aplikacji Qlika w NPrinting. Grupuje connection, raporty i filtry w jednym kontekście.
+Przykład: App „Sales Reports” zawiera wszystkie raporty związane ze sprzedażą.
+
+Cache (NPrinting Cache)
+Zrzut danych z aplikacji Qlika przechowywany przez NPrinting, aby przyspieszyć generowanie raportów. Aktualizowany przez zadania reload.
+Przykład: Najpierw odświeżasz cache, a dopiero potem generujesz raporty – żeby uniknąć pobierania danych „na żywo”.
+
+3. Raportowanie
+
+Report
+Definicja raportu oparta na szablonie (template), określająca jak dane mają być prezentowane. Powiązana z konkretną aplikacją NPrinting.
+Przykład: Raport „Monthly Sales.xlsx” generuje tabelę sprzedaży per region.
+
+Template
+Plik (Excel, Word, PowerPoint, HTML), który definiuje layout raportu. Zawiera miejsca (placeholders) na dane z Qlika.
+Przykład: W Excelu masz arkusz z placeholderem tabeli sprzedaży i miejscem na KPI.
+
+Level
+Mechanizm iteracji po wymiarze (np. klient, region), który pozwala generować sekcje raportu dla każdej wartości.
+Przykład: Raport generuje osobny arkusz dla każdego regionu sprzedaży.
+
+PixelPerfect Report
+Typ raportu o wysokiej kontroli nad layoutem (np. PDF), tworzony w Designerze PixelPerfect. Używany do raportów formalnych.
+Przykład: Faktura lub raport finansowy wymagający dokładnego formatowania.
+
+4. Filtry i personalizacja
+
+Filter
+Mechanizm ograniczania danych na poziomie raportu lub użytkownika. Filtry mogą być statyczne lub dynamiczne.
+Przykład: Użytkownik z regionu „West” widzi tylko dane dla swojego regionu.
+
+User Filter
+Filtr przypisany do konkretnego użytkownika lub grupy. Pozwala na personalizację raportów bez duplikowania ich definicji.
+Przykład: Każdy manager dostaje raport tylko dla swojego zespołu.
+
+Variable (NPrinting Variable)
+Zmienna używana w raportach lub filtrach, często dynamiczna. Może pobierać wartości z Qlika lub być definiowana ręcznie.
+Przykład: Zmienna z datą ostatniego reloadu raportu wyświetlana w nagłówku.
+
+5. Automatyzacja i dystrybucja
+
+Task
+Jednostka wykonawcza w NPrinting, która realizuje konkretne operacje: generowanie raportów, reload cache, dystrybucję.
+Przykład: Task „Daily Sales Report” generuje raport i wysyła go do użytkowników.
+
+Publish Task
+Typ zadania odpowiedzialny za generowanie i dystrybucję raportów. Może wysyłać pliki mailem lub zapisywać je na dysku.
+Przykład: Codziennie o 7:00 raport trafia na SharePoint lub mail.
+
+Reload Task (Metadata / Cache)
+Zadanie odświeżające metadane lub cache aplikacji. Kluczowe dla aktualności danych.
+Przykład: Najpierw reload cache o 6:00, potem publish o 6:30.
+
+Schedule
+Harmonogram określający kiedy task ma się uruchomić. Może być cykliczny lub oparty na zdarzeniach.
+Przykład: Raport uruchamiany codziennie o 8:00 w dni robocze.
+
+6. Użytkownicy i bezpieczeństwo
+
+User
+Konto w NPrinting, które może otrzymywać raporty lub mieć dostęp do Web Console. Może być lokalne lub zintegrowane z AD.
+Przykład: Dodajesz użytkownika z działu sprzedaży jako odbiorcę raportu.
+
+Role
+Zestaw uprawnień określających, co użytkownik może robić w systemie.
+Przykład: Developer może tworzyć raporty, a Viewer tylko je odbierać.
+
+Recipient
+Użytkownik lub grupa, do której wysyłane są raporty. Może mieć przypisane filtry.
+Przykład: Lista mailingowa „Sales Managers” jako recipient raportu.
+
+7. Dobre praktyki operacyjne
+
+Bursting
+Technika generowania wielu wersji raportu na podstawie jednego szablonu i różnych filtrów.
+Przykład: Jeden raport generowany osobno dla każdego regionu i wysyłany do odpowiednich managerów.
+
+On-Demand Reporting
+Możliwość ręcznego generowania raportu przez użytkownika z poziomu Qlik Sense.
+Przykład: Użytkownik klika przycisk i dostaje aktualny raport PDF.
+
+NewsStand
+Portal użytkownika końcowego do przeglądania i pobierania raportów.
+Przykład: Manager loguje się i pobiera archiwalne raporty sprzedaży.
