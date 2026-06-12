@@ -84,5 +84,5 @@ forecast <- rbind(gdynia_forecast,tychy_forecast,kolobrzeg_forecast,
                   krakow_forecast, `zielona gora_forecast`)
 
 
-# Zapisz tabelę:
+# Zapisz tabelę-----------------------------------------------------------------
 write.csv(forecast, "forecast.csv")
